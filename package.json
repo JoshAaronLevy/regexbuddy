@@ -8,5 +8,6 @@
   },
   "keywords": [],
   "author": "Josh Levy",
-  "license": "ISC"
+  "license": "ISC",
+  "private": false
 }
