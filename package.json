@@ -1,13 +1,26 @@
 {
   "name": "regexbuddy",
-  "version": "0.0.4",
-  "description": "",
+  "version": "0.0.5",
+  "description": "Implement regex expressions in JavaScript",
+  "repository": {
+    "url": "https://github.com/JoshAaronLevy/regexbuddy"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Josh Levy",
+  "keywords": [
+    "regex",
+    "regular expression",
+    "javascript"
+  ],
+  "author": {
+    "name": "Josh Levy"
+  },
   "license": "ISC",
-  "private": false
+  "private": false,
+  "preferGlobal": false,
+  "bin": {
+    "regexbuddy": "./bin/index.js"
+  }
 }
