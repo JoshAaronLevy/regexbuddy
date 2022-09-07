@@ -1,11 +1,11 @@
 {
   "name": "regexbuddy",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Implement regex expressions in JavaScript",
   "repository": {
     "url": "https://github.com/JoshAaronLevy/regexbuddy"
   },
-  "main": "index.js",
+  "main": "./bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
