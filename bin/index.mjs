@@ -1,4 +1,12 @@
 const validateEmail = (emailAddress) => {
+	if (!emailAddress) {
+		console.error(`No email address provided`);
+		return false;
+	}
+	if (emailAddress = undefined) {
+		console.error(`Invalid input for email. Expected a string, but got ${undefined}`);
+		return false;
+	}
 	if (emailAddress.constructor.name !== 'String') {
 		console.error(`Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`);
 		return false;
