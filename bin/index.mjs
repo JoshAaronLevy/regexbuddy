@@ -1,10 +1,20 @@
-// ...input accepts the input from the user at index 0, and the desired expression at index 1
-export const filterValues = (...input) => {
-	// Next line is a default expression to test the function and condition for missing expression in the arguments passed in
-	if (input.length < 2) input.push(/[a-cA-c]+/);
-	const myRe = new RegExp(input[1]);
-	if (typeof input[0] !== 'string') input = input[0];
-	return input.filter(item => {
-		if (myRe.test(item)) return item;
-	});
+export const email = (emailAddress) => {
+	return {
+		validate: () => validateEmail(emailAddress)
+	};
+}
+
+export const validateEmail = (emailAddress) => {
+	if (emailAddress.constructor.name !== 'String') {
+		console.error(`Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`);
+		return false;
+	} else {
+		const myRe = new RegExp(/^[^@ ]+@[^@ ]+\.[^@ \.]{2,}$/);
+		if (!myRe.exec(emailAddress)) {
+			console.error(`Invalid email address: ${emailAddress}`);
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
