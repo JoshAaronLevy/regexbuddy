@@ -1,13 +1,13 @@
 {
   "name": "regexbuddy",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "Implement regex expressions in JavaScript",
   "repository": {
     "url": "https://github.com/JoshAaronLevy/regexbuddy"
   },
   "main": "./bin/index.mjs",
   "scripts": {
-    "deploy": "git add -A && git commit -m \"updated version\" && git push origin main && npm publish",
+    "publish": "git add -A && git commit -m \"updated version\" && git push origin main && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
