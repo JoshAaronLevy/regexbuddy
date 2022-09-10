@@ -1,25 +1,15 @@
+import * as expressions from "../lib/expressions.mjs";
+
 const renderError = (errorMsg) => {
 	return console.error(`RegexBuddy: ` + errorMsg);
 }
 
 const validateEmail = (emailAddress) => {
-	if (!emailAddress || emailAddress === undefined) {
-		renderError(`No email address provided`);
-		return false;
-	} else {
-		if (emailAddress.constructor.name !== 'String') {
-			renderError(`Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`);
-			return false;
-		} else {
-			const myRe = new RegExp(/^[^@ ]+@[^@ ]+\.[^@ \.]{2,}$/);
-			if (!myRe.exec(emailAddress)) {
-				renderError(`Invalid email address: ${emailAddress}`);
-				return false;
-			} else {
-				return true;
-			}
-		}
-	}
+	let emailValid = false;
+	if (!emailAddress || emailAddress === undefined) renderError(`No email address provided`);
+	if (emailAddress.constructor.name !== 'String') renderError(`Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`);
+	!expressions.baseEmail.exec(emailAddress) ? renderError(`Invalid email address: ${emailAddress}`) : emailValid = true;
+	return emailValid;
 }
 
 export const email = (emailAddress) => {
