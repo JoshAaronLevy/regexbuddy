@@ -24,6 +24,30 @@ const validatePassword = (password, options) => {
 	return true;
 }
 
+const findArrayDupes = (firstArray, arrayOptions, comparisonArray) => {
+	let result = {
+		duplicates: [],
+		unique: [],
+		dupeCount: 0,
+	}
+	if (!arrayOptions) {
+		if (comparisonArray) {
+			for (let i = 0; i < firstArray.length; i++) {
+				for (let j = 0; j < comparisonArray.length; j++) {
+					if (firstArray[i] === comparisonArray[j]) {
+						result.duplicates.push(firstArray[i]);
+						result.dupeCount++;
+					} else {
+						result.unique.push(firstArray[i]);
+					}
+				}
+			}
+		}
+	}
+	return result;
+	// return new Set(array.filter((item, index) => array.indexOf(item) !== index));
+}
+
 export const email = (emailAddress) => {
 	return {
 		validate: () => validateEmail(emailAddress)
@@ -34,8 +58,21 @@ export const password = (password) => {
 	return {
 		validate: (options) => {
 			if (!options || options === undefined) options = {};
-			const pwOptions = defaultOptions.password(options);
+			const pwOptions = defaultOptions.passwordOptions(options);
 			return validatePassword(password, pwOptions);
 		}
 	};
+}
+
+export const array = (firstArray, options) => {
+	if (!firstArray) return renderError(`No array provided`);
+	if (firstArray.constructor.name !== 'Array') return renderError(`Invalid input type for ${firstArray}. Expected an array, but got ${firstArray.constructor.name}`);
+	return {
+		findDuplicates: (comparisonArray) => {
+			let arrayOptions;
+			(!options || options === undefined) ? arrayOptions = null : arrayOptions = defaultOptions.arrayOptions(options);
+			if (!comparisonArray || comparisonArray === undefined) comparisonArray = null;
+			return findArrayDupes(firstArray, arrayOptions, comparisonArray);
+		}
+	}
 }
