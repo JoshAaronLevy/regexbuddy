@@ -42,10 +42,11 @@ const findArrayDupes = (firstArray, arrayOptions, comparisonArray) => {
 					}
 				}
 			}
+		} else {
+			result = new Set(firstArray.filter((item, index) => array.indexOf(item) !== index));
 		}
 	}
 	return result;
-	// return new Set(array.filter((item, index) => array.indexOf(item) !== index));
 }
 
 export const email = (emailAddress) => {
