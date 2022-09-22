@@ -42,18 +42,40 @@ regexBuddy.password(input).validate();
 
 This takes the `input` value you pass in as an argument, and validates against the default password requirements.
 
-Default requirements are that a password must contain:
+Default requirements are that a password must contain (with the option name and data type for overwriting defaults):
 
-1. At least one uppercase letter
-2. At least one lowercase letter
-3. At least one number
-4. At least one special character
-5. A minimum of 5 characters
+1. At least one uppercase letter (name: requireUpperCase, type: boolean)
+2. At least one lowercase letter (name: requireLowerCase, type: boolean)
+3. At least one number (name: requireNumber, type: boolean)
+4. At least one special character (name: requireSpecialCharacter, type: boolean)
+5. A minimum of 5 characters (name: minLength, type: number)
 
 The default requirements can be overwritten by passing in your requirements in the validate function like this:
 
 ```javascript
-regexBuddy.password(input).validate({ minlength: 8, requireNumber: false });
+regexBuddy.password(input).validate({ minlength: 8, requireSpecialCharacter: false });
 ```
 
 **NOTE:** Options that are ignored will still have their default values used. So in the example above, a password must have at least 8 characters and does not need to have a number. But it must also still include an uppercase letter, lowercase letter, and a special character.
+
+An example of how to use this in your code would be:
+
+```javascript
+const validPassword = regexBuddy.password(input).validate({ minlength: 8, requireSpecialCharacter: false });
+```
+
+This would let you reference the `validPassword` variable in a simple way, like this conditional statement:
+
+```javascript
+// If a password is valid
+if (validPassword) {
+  // Run this code
+  ...
+}
+```
+
+Or implement in your corresponding template file, like this:
+
+```html
+<button type="submit" disabled={!validPassword}>Submit</button>
+```
