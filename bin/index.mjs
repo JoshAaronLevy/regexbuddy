@@ -25,25 +25,20 @@ const validatePassword = (password, options) => {
 }
 
 const findArrayDupes = (firstArray, arrayOptions, comparisonArray) => {
+	let flattenedArray;
 	let result = {
-		duplicates: [],
-		unique: [],
-		dupeCount: 0,
+		duplicateValues: [],
+		uniqueValues: [],
+		count: 0,
 	}
 	if (!arrayOptions) {
-		if (comparisonArray) {
-			for (let i = 0; i < firstArray.length; i++) {
-				for (let j = 0; j < comparisonArray.length; j++) {
-					if (firstArray[i] === comparisonArray[j]) {
-						result.duplicates.push(firstArray[i]);
-						result.dupeCount++;
-					} else {
-						result.unique.push(firstArray[i]);
-					}
-				}
-			}
-		} else {
-			result = new Set(firstArray.filter((item, index) => array.indexOf(item) !== index));
+		comparisonArray ? flattenedArray = [...firstArray, ...comparisonArray] : flattenedArray = firstArray;
+		const duplicateSet = new Set(flattenedArray.filter((item, index) => flattenedArray.indexOf(item) !== index));
+		const uniqueSet = new Set(flattenedArray.filter((item, index) => flattenedArray.indexOf(item) === index));
+		result = {
+			duplicateValues: [...duplicateSet],
+			uniqueValues: [...uniqueSet],
+			count: new Set(flattenedArray.filter((item, index) => flattenedArray.indexOf(item) !== index)).size,
 		}
 	}
 	return result;
