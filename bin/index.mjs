@@ -77,10 +77,20 @@ export const array = (leftArray) => {
 	if (!leftArray) return renderError(`No array provided`);
 	if (leftArray.constructor.name !== 'Array') return renderError(`Invalid input type for ${leftArray}. Expected an array, but got ${leftArray.constructor.name}`);
 	return {
-		findDuplicates: (comparisonVal, options) => {
-			if (!options || options === undefined) options = {};
-			options = defaultOptions.arrayOptions(options);
-			if (!comparisonVal || comparisonVal === undefined) comparisonVal = '';
+		findDuplicates: (...args) => {
+			let comparisonVal = '';
+			let customOptions = {};
+			if (args && args.length > 0) {
+				args.map(arg => {
+					if (arg.constructor.name === 'String') {
+						comparisonVal = arg;
+					}
+					if (arg.constructor.name === 'Object') {
+						customOptions = arg;
+					}
+				})
+			}
+			const options = defaultOptions.arrayOptions(customOptions);
 			return findArrayDupes(leftArray, comparisonVal, options);
 		}
 	}
