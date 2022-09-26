@@ -21,7 +21,7 @@ const validatePassword = (password, options) => {
 	if (options.requireSpecialCharacter.value && expressions.password.hasSpecialCharacter.test(password)) options.requireSpecialCharacter.valid = true;
 	if (options.requireUpperCase.value && expressions.password.hasUpperCase.test(password)) options.requireUpperCase.valid = true;
 	if (options.requireLowerCase.value && expressions.password.hasLowerCase.test(password)) options.requireLowerCase.valid = true;
-	let filteredErrors = Object.values(options).filter((option) => option.valid === false).map((option) => option.errorMessage);
+	const filteredErrors = Object.values(options).filter((option) => option.valid === false).map((option) => option.errorMessage);
 	if (filteredErrors && filteredErrors.length > 0) {
 		return {
 			valid: false,
@@ -78,8 +78,8 @@ export const password = (password) => {
 	return {
 		validate: (options) => {
 			if (!options || options === undefined) options = {};
-			const newOpts = defaultOptions.defaults(options).password;
-			return validatePassword(password, newOpts);
+			const customOptions = defaultOptions.defaults(options).password;
+			return validatePassword(password, customOptions);
 		}
 	};
 }
@@ -90,19 +90,19 @@ export const array = (leftArray) => {
 	return {
 		findDuplicates: (...args) => {
 			let comparisonVal = '';
-			let customOptions = {};
+			let options = {};
 			if (args && args.length > 0) {
 				args.map(arg => {
 					if (arg.constructor.name === 'String') {
 						comparisonVal = arg;
 					}
 					if (arg.constructor.name === 'Object') {
-						customOptions = arg;
+						options = arg;
 					}
 				})
 			}
-			const options = defaultOptions.arrayOptions(customOptions);
-			return findArrayDupes(leftArray, comparisonVal, options);
+			const customOptions = defaultOptions.defaults(options).array;
+			return findArrayDupes(leftArray, comparisonVal, customOptions);
 		}
 	}
 }
