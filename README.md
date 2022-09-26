@@ -32,8 +32,6 @@ regexBuddy.password(input).validate();
 
 ### Password Validation
 
-**NOTE:** The password validation method simply returns `true` or `false`.
-
 For password validation, you can simply use:
 
 ```javascript
@@ -53,29 +51,40 @@ Default requirements are that a password must contain (with the option name and 
 The default requirements can be overwritten by passing in your requirements in the validate function like this:
 
 ```javascript
-regexBuddy.password(input).validate({ minlength: 8, requireSpecialCharacter: false });
+regexBuddy.password(input).validate({ minLength: 8, requireSpecialCharacter: false });
 ```
 
 **NOTE:** Options that are ignored will still have their default values used. So in the example above, a password must have at least 8 characters and does not need to have a number. But it must also still include an uppercase letter, lowercase letter, and a special character.
 
+**NOTE:** The password validation method returns an object structured like this:
+
+```javascript
+{
+  valid: boolean,
+  errors: [ validationErrors ] || null
+}
+```
+
+This gives you the option of serving the client an array of the criteria not met when creating a password, or simply using the password validation method in a conditional expression. And the `valid` property was added for those who prefer using explicit conditional evaluation over implicit "truthy" methods for something like a password.
+
 An example of how to use this in your code would be:
 
 ```javascript
-const validPassword = regexBuddy.password(input).validate({ minlength: 8, requireSpecialCharacter: false });
+const passwordCheck = regexBuddy.password(input).validate({ minlength: 8, requireSpecialCharacter: false });
 ```
 
-This would let you reference the `validPassword` variable in a simple way, like this conditional statement:
+This would let you reference the `passwordCheck` variable in a simple way, like these examples:
 
 ```javascript
-// If a password is valid
-if (validPassword) {
-  // Run this code
+// If a password is invalid
+if (passwordCheck.errors) {
+  // You can then map the array of errors in passwordCheck.errors to a DOM object, like a toast, modal, etc.
   ...
 }
 ```
 
-Or implement in your corresponding template file, like this:
+Or implement as a simple, explicit conditional in your corresponding template file, like this example, where a submit button is disabled when there are any errors with the user's input value:
 
 ```html
-<button type="submit" disabled={!validPassword}>Submit</button>
+<button type="submit" disabled={!passwordCheck.valid}>Submit</button>
 ```
