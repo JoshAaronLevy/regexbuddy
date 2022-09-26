@@ -106,18 +106,3 @@ export const array = (leftArray) => {
 		}
 	}
 }
-
-const arr1 = [
-	'Josh',
-	'Dan',
-	'Zoe',
-	'Zoe',
-	'Zoe',
-	'zoe'
-];
-
-const compareVal = 'Zoe';
-
-// console.log(array(arr1).findDuplicates(compareVal));
-
-console.log(password('assword123!').validate({ minLength: 9 }).errors);
