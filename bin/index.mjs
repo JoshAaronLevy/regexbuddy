@@ -16,12 +16,23 @@ const validateEmail = (emailAddress) => {
 
 const validatePassword = (password, options) => {
 	if (!password || password === undefined) return renderError(`No password provided`);
-	if (password.length < options.minLength) return renderError(`Password must be at least ${options.minLength} characters long`);
-	if (options.requireNumber && !expressions.password.hasNumber.test(password)) return renderError(`Password must contain at least one number`);
-	if (options.requireSpecialCharacter && !expressions.password.hasSpecialCharacter.test(password)) return renderError(`Password must contain at least one special character`);
-	if (options.requireUpperCase && !expressions.password.hasUpperCase.test(password)) return renderError(`Password must contain at least one uppercase letter`);
-	if (options.requireLowerCase && !expressions.password.hasLowerCase.test(password)) return renderError(`Password must contain at least one lowercase letter`);
-	return true;
+	if (password.length >= options.minLength.value) options.minLength.valid = true;
+	if (options.requireNumber.value && expressions.password.hasNumber.test(password)) options.requireNumber.valid = true;
+	if (options.requireSpecialCharacter.value && expressions.password.hasSpecialCharacter.test(password)) options.requireSpecialCharacter.valid = true;
+	if (options.requireUpperCase.value && expressions.password.hasUpperCase.test(password)) options.requireUpperCase.valid = true;
+	if (options.requireLowerCase.value && expressions.password.hasLowerCase.test(password)) options.requireLowerCase.valid = true;
+	let filteredErrors = Object.values(options).filter((option) => option.valid === false).map((option) => option.errorMessage);
+	if (filteredErrors && filteredErrors.length > 0) {
+		return {
+			valid: false,
+			errors: filteredErrors
+		}
+	} else {
+		return {
+			valid: true,
+			errors: null
+		}
+	}
 }
 
 const findArrayDupes = (leftArray, comparisonVal, options) => {
@@ -67,8 +78,8 @@ export const password = (password) => {
 	return {
 		validate: (options) => {
 			if (!options || options === undefined) options = {};
-			options = defaultOptions.passwordOptions(options);
-			return validatePassword(password, options);
+			const newOpts = defaultOptions.defaults(options).password;
+			return validatePassword(password, newOpts);
 		}
 	};
 }
@@ -95,3 +106,18 @@ export const array = (leftArray) => {
 		}
 	}
 }
+
+const arr1 = [
+	'Josh',
+	'Dan',
+	'Zoe',
+	'Zoe',
+	'Zoe',
+	'zoe'
+];
+
+const compareVal = 'Zoe';
+
+// console.log(array(arr1).findDuplicates(compareVal));
+
+console.log(password('assword123!').validate({ minLength: 9 }).errors);
