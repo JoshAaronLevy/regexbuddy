@@ -6,12 +6,19 @@ const renderError = (errorMsg) => {
 	return false;
 }
 
-const validateEmail = (emailAddress) => {
-	let emailValid = false;
-	if (!emailAddress || emailAddress === undefined) renderError(`No email address provided`);
-	if (emailAddress.constructor.name !== 'String') renderError(`Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`);
-	!expressions.email.base.exec(emailAddress) ? renderError(`Invalid email address: ${emailAddress}`) : emailValid = true;
-	return emailValid;
+const validateEmail = (emailAddress, options) => {
+	let message = null;
+	if (!emailAddress || emailAddress === undefined) message = `No email address provided`;
+	if (emailAddress.constructor.name !== 'String') message = `Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`;
+	if (!expressions.email(options).base.exec(emailAddress)) message = `Invalid email address: ${emailAddress}`;
+	if (expressions.email(options).base.exec(emailAddress) && (options.permitted.value || options.restricted.value)) {
+		if (options.permitted.value && !expressions.email(options).permitted.exec(emailAddress)) message = `${options.permitted.errorMessage}`;
+		if (options.restricted.value && expressions.email(options).restricted.exec(emailAddress)) message = `${options.restricted.errorMessage}`;
+	}
+	return {
+		valid: message ? false : true,
+		message: message
+	};
 }
 
 const validatePassword = (password, options) => {
@@ -70,7 +77,11 @@ const findArrayDupes = (leftArray, comparisonVal, options) => {
 
 export const email = (emailAddress) => {
 	return {
-		validate: () => validateEmail(emailAddress)
+		validate: (options) => {
+			if (!options || options === undefined) options = {};
+			const customOptions = defaultOptions.defaults(options).email;
+			return validateEmail(emailAddress, customOptions);
+		}
 	};
 }
 
