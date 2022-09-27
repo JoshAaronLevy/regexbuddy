@@ -30,6 +30,45 @@ regexBuddy.password(input).validate();
 
 ## Available Functions and Methods
 
+### Email Validation
+
+For email validation, you can simply use:
+
+```javascript
+regexBuddy.email(input).validate();
+```
+
+This runs a regex function to ensure the input is a valid email address. The return value from the above method is:
+
+```javascript
+{
+  valid: Boolean
+  message: `Error message` || null
+}
+```
+
+#### Email Validation Options
+
+You can also customize validation criteria with `permitted` and `restricted` values.
+
+For instance, if you wanted to only allow email addresses with a `@yourcompanyname` email address, you would do the following:
+
+```javascript
+regexBuddy.email(input).validate({ permitted: "yourcompanyname" });
+```
+
+You can do the same with email domains you explicitly do not want to permit, like this:
+
+```javascript
+regexBuddy.email(input).validate({ restricted: "aol" });
+```
+
+The `permitted` and `restricted` values let you pass in either a String or Array. So you can also do this:
+
+```javascript
+regexBuddy.email(input).validate({ restricted: ["aol", "hotmail"] });
+```
+
 ### Password Validation
 
 For password validation, you can simply use:
@@ -60,7 +99,7 @@ regexBuddy.password(input).validate({ minLength: 8, requireSpecialCharacter: fal
 
 ```javascript
 {
-  valid: boolean,
+  valid: Boolean,
   errors: [ validationErrors ] || null
 }
 ```

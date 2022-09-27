@@ -7,17 +7,27 @@ const renderError = (errorMsg) => {
 }
 
 const validateEmail = (emailAddress, options) => {
+	let emailValid = false;
 	let message = null;
 	if (!emailAddress || emailAddress === undefined) message = `No email address provided`;
 	if (emailAddress.constructor.name !== 'String') message = `Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`;
-	if (!expressions.email(options).base.exec(emailAddress)) message = `Invalid email address: ${emailAddress}`;
-	if (expressions.email(options).base.exec(emailAddress) && (options.permitted.value || options.restricted.value)) {
-		if (options.permitted.value && !expressions.email(options).permitted.exec(emailAddress)) message = `${options.permitted.errorMessage}`;
-		if (options.restricted.value && expressions.email(options).restricted.exec(emailAddress)) message = `${options.restricted.errorMessage}`;
+	if (!expressions.email(options).base.test(emailAddress)) message = `Invalid email address: ${emailAddress}`;
+	if (!options.permitted.value && !options.restricted.value) {
+		emailValid = expressions.email(options).base.test(emailAddress);
+	} else {
+		if (expressions.email(options).base.test(emailAddress)) {
+			if (options.permitted.value) {
+				const emailCheck = options.permitted.value.map((value) => expressions.email(value).permitted.test(emailAddress)).filter((value) => value === true);
+				emailCheck.length > 0 ? emailValid = true : message = `${options.permitted.errorMessage}`;
+			} else if (options.restricted.value) {
+				const emailCheck = options.restricted.value.map((value) => expressions.email(value).restricted.test(emailAddress)).filter((value) => value === true);
+				emailCheck.length === 0 ? emailValid = true : message = `${options.restricted.errorMessage}`;
+			}
+		}
 	}
 	return {
-		valid: message ? false : true,
-		message: message
+		valid: emailValid,
+		message: emailValid ? null : message
 	};
 }
 
@@ -78,7 +88,12 @@ const findArrayDupes = (leftArray, comparisonVal, options) => {
 export const email = (emailAddress) => {
 	return {
 		validate: (options) => {
-			if (!options || options === undefined) options = {};
+			if (!options || options === undefined) {
+				options = {};
+			} else {
+				if (options.permitted && options.permitted.constructor.name === 'String') options.permitted = [options.permitted];
+				if (options.restricted && options.restricted.constructor.name === 'String') options.restricted = [options.restricted];
+			}
 			const customOptions = defaultOptions.defaults(options).email;
 			return validateEmail(emailAddress, customOptions);
 		}
