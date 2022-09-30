@@ -165,5 +165,3 @@ export const array = (leftArray) => {
 		}
 	}
 }
-
-console.log(convertCase('this is a test', { case: 'camel' }));
