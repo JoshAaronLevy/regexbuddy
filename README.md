@@ -1,6 +1,16 @@
 # RegexBuddy
 
-regexbuddy allows you to implement common regex functionality in your code, using a simplified syntax. Currently, regexbuddy has functions for regex-based password validation, as well as array duplicate functions. The array functions - along with other features - are being added, and a new version is released weekly. 
+regexbuddy allows you to implement common regex functionality in your code, using a simplified syntax. Currently, regexbuddy has functions for regex-based password validation, as well as array duplicate functions. The array functions - along with other features - are being added, and a new version is released weekly.
+
+## Features
+
+#### 1. Email Validation
+
+#### 2. Password Validation
+
+#### 3. Case Conversion
+
+#### 4. Array De-Duplication
 
 ## Installation
 
@@ -127,3 +137,46 @@ Or implement as a simple, explicit conditional in your corresponding template fi
 ```html
 <button type="submit" disabled={!passwordCheck.valid}>Submit</button>
 ```
+
+### Case Conversion
+
+With regexbuddy, you can convert any string into either pascal, camel, kebab, snake, or sql case. You can do this with the following method:
+
+```javascript
+regexBuddy.convertCase("your String goes Here")
+```
+
+Using the base syntax returns an object that looks like this:
+
+```javascript
+{
+  original: 'your String goes Here',
+  camel: 'yourStringGoesHere',
+  kebab: 'your-string-goes-here',
+  pascal: 'Your String Goes Here',
+  snake: 'your_string_goes_here',
+  sql: 'YOUR_STRING_GOES_HERE'
+}
+```
+
+If you need to use different cases for a value throughout your code, you can utilize case conversion like this:
+
+```javascript
+const dName = regexBuddy.convertCase(displayName)
+```
+
+And wherever you use the `dName` variable, you can specifiy the case like this:
+
+```html
+<h2 className="card-header">{dName.pascal}</h2>
+```
+
+The case converter also accepts a designated case as an option. You can do so like this:
+
+```javascript
+regexBuddy.convertCase("your String goes Here", { case: 'camel' })
+```
+
+The return value of this is simply the string converted into the desired case.
+
+**NOTE:** This is a much more performant way to utilize the case converter, and is recommended, when you can.

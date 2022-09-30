@@ -126,9 +126,9 @@ export const convertCase = (...args) => {
 		return {
 			original: args[0],
 			camel: camelCase(args[0]),
-			snake: snakeCase(args[0]),
 			kebab: kebabCase(args[0]),
 			pascal: pascalCase(args[0]),
+			snake: snakeCase(args[0]),
 			sql: sqlCase(args[0])
 		}
 	} else if (args.length === 2) {
@@ -136,9 +136,9 @@ export const convertCase = (...args) => {
 		const declaredCase = args[1]['case'].toLowerCase();
 		if (!validCases.includes(declaredCase)) return renderError(`${declaredCase} is not a valid case. Please use one of the following: ${validCases.join(', ')}`);
 		if (declaredCase === 'camel') return camelCase(args[0]);
-		if (declaredCase === 'snake') return snakeCase(args[0]);
 		if (declaredCase === 'kebab') return kebabCase(args[0]);
 		if (declaredCase === 'pascal') return pascalCase(args[0]);
+		if (declaredCase === 'snake') return snakeCase(args[0]);
 		if (declaredCase === 'sql') return sqlCase(args[0]);
 	}
 }
