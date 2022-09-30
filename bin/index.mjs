@@ -85,6 +85,16 @@ const findArrayDupes = (leftArray, comparisonVal, options) => {
 	return result;
 }
 
+const camelCase = (str) => str.replace(expressions.cases.camel, (word, index) => index == 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+
+const snakeCase = (str) => str.match(expressions.cases.snake).map((word) => word.toLowerCase()).join('_');
+
+const kebabCase = (str) => str.match(expressions.cases.kebab).map((word) => word.toLowerCase()).join('-');
+
+const pascalCase = (str) => str.replace(expressions.cases.pascal, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase());
+
+const sqlCase = (str) => snakeCase(str).toUpperCase();
+
 export const email = (emailAddress) => {
 	return {
 		validate: (options) => {
@@ -110,6 +120,29 @@ export const password = (password) => {
 	};
 }
 
+export const convertCase = (...args) => {
+	if (!args[0] || args[0] === undefined) return renderError(`No value provided to convert`);
+	if (args.length === 1) {
+		return {
+			original: args[0],
+			camel: camelCase(args[0]),
+			snake: snakeCase(args[0]),
+			kebab: kebabCase(args[0]),
+			pascal: pascalCase(args[0]),
+			sql: sqlCase(args[0])
+		}
+	} else if (args.length === 2) {
+		const validCases = ['camel', 'snake', 'kebab', 'pascal', 'sql'];
+		const declaredCase = args[1]['case'].toLowerCase();
+		if (!validCases.includes(declaredCase)) return renderError(`${declaredCase} is not a valid case. Please use one of the following: ${validCases.join(', ')}`);
+		if (declaredCase === 'camel') return camelCase(args[0]);
+		if (declaredCase === 'snake') return snakeCase(args[0]);
+		if (declaredCase === 'kebab') return kebabCase(args[0]);
+		if (declaredCase === 'pascal') return pascalCase(args[0]);
+		if (declaredCase === 'sql') return sqlCase(args[0]);
+	}
+}
+
 export const array = (leftArray) => {
 	if (!leftArray) return renderError(`No array provided`);
 	if (leftArray.constructor.name !== 'Array') return renderError(`Invalid input type for ${leftArray}. Expected an array, but got ${leftArray.constructor.name}`);
@@ -132,3 +165,5 @@ export const array = (leftArray) => {
 		}
 	}
 }
+
+console.log(convertCase('this is a test', { case: 'camel' }));
