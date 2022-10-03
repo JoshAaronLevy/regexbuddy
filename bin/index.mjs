@@ -52,6 +52,8 @@ const validatePassword = (password, options) => {
 	}
 }
 
+const matchPassword = (password1, password2) => new RegExp(`^${password1}$`).test(password2);
+
 const findArrayDupes = (leftArray, comparisonVal, options) => {
 	let result = {};
 	let duplicateVals;
@@ -116,6 +118,9 @@ export const password = (password) => {
 			if (!options || options === undefined) options = {};
 			const customOptions = defaultOptions.defaults(options).password;
 			return validatePassword(password, customOptions);
+		},
+		matches: (password2) => {
+			return matchPassword(password, password2);
 		}
 	};
 }

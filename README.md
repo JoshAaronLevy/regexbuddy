@@ -138,6 +138,14 @@ Or implement as a simple, explicit conditional in your corresponding template fi
 <button type="submit" disabled={!passwordCheck.valid}>Submit</button>
 ```
 
+You can also ensure strict password matching when requiring someone to re-enter their password with the `matches()` method, like this:
+
+```javascript
+regexBuddy.password(password1).matches(password2);
+```
+
+This simply returns `true` or `false`.
+
 ### Case Conversion
 
 With regexbuddy, you can convert any string into either pascal, camel, kebab, snake, or sql case. You can do this with the following method:
