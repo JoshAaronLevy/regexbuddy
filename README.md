@@ -1,5 +1,7 @@
 # RegexBuddy
 
+:sob:
+
 regexbuddy allows you to implement common regex functionality in your code, using a simplified syntax. Currently, regexbuddy has functions for regex-based password validation, as well as array duplicate functions. The array functions - along with other features - are being added, and a new version is released weekly.
 
 ## Features
