@@ -1,4 +1,4 @@
-export const email = (value) => {
+export const email = (value: string) => {
 	return {
 		base: new RegExp(/^[^@ ]+@[^@ ]+\.[^@ \.]{2,}$/),
 		permitted: new RegExp(value, 'i'),
@@ -13,8 +13,8 @@ export const password = {
 	hasLowerCase: new RegExp(/(?=.*[a-z])/),
 }
 
-export const array = (options, comparisonVal) => {
-	let comparisonExp;
+export const array = (options: any, comparisonVal: any) => {
+	let comparisonExp: any;
 	if (options.ignoreCase && options.matchWholeWord) comparisonExp = new RegExp(`\\b${comparisonVal}\\b`, 'i');
 	if (options.ignoreCase && !options.matchWholeWord) comparisonExp = new RegExp(comparisonVal, 'i');
 	if (!options.ignoreCase && options.matchWholeWord) comparisonExp = new RegExp(`\\b${comparisonVal}\\b`);

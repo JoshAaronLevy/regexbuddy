@@ -5,8 +5,9 @@
   "repository": {
     "url": "https://github.com/JoshAaronLevy/regexbuddy"
   },
-  "main": "./bin/index.mjs",
+  "main": "./src/index.ts",
   "scripts": {
+    "build": "tsc",
     "deploy": "git add -A && git commit -m \"updated version\" && git push origin main && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +27,10 @@
   "private": false,
   "preferGlobal": false,
   "bin": {
-    "regexbuddy": "./bin/index.mjs"
+    "regexbuddy": "./src/index.ts"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.4"
   }
 }
