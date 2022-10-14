@@ -11,7 +11,10 @@
 		"lib": [
 			"ES2016",
 		],
-		"rootDir": "src"
+		"rootDir": "src",
+		"allowSyntheticDefaultImports": true,
+		"downlevelIteration": true,
+		"alwaysStrict": false
 	},
 	"include": [
 		"src"
