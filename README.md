@@ -13,16 +13,6 @@ regexbuddy allows you to implement common regex functionality in your code, usin
   - [Case Conversion](#case-conversion)
   - [Array De-Duplication](#array-de-duplication)
 
-## Features
-
-#### 1. Email Validation
-
-#### 2. Password Validation
-
-#### 3. Case Conversion
-
-#### 4. Array De-Duplication
-
 ## Installation
 
 **Install in your project locally:**
