@@ -5,7 +5,8 @@
   "repository": {
     "url": "https://github.com/JoshAaronLevy/regexbuddy"
   },
-  "main": "./src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "deploy": "git add -A && git commit -m \"updated version\" && git push origin main && npm publish",

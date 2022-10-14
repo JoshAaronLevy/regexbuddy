@@ -1,42 +1,6 @@
-type MinLength = {
-	value: number;
-	valid: boolean;
-	errorMessage: string;
-}
+import { PasswordDefaults } from "../interfaces/password.mjs"
 
-type RequireNumber = {
-	value: boolean;
-	valid: boolean;
-	errorMessage: string;
-}
-
-type RequireSpecialCharacter = {
-	value: boolean;
-	valid: boolean;
-	errorMessage: string;
-}
-
-type RequireUpperCase = {
-	value: boolean;
-	valid: boolean;
-	errorMessage: string;
-}
-
-type RequireLowerCase = {
-	value: boolean;
-	valid: boolean;
-	errorMessage: string;
-}
-
-export type DefaultOptions = {
-	minLength: MinLength;
-	requireNumber: RequireNumber;
-	requireSpecialCharacter: RequireSpecialCharacter;
-	requireUpperCase: RequireUpperCase;
-	requireLowerCase: RequireLowerCase;
-};
-
-export const defaults = (options: DefaultOptions) => {
+export const passwordOptions = (options: PasswordDefaults) => {
 	return {
 		password: {
 			minLength: {
