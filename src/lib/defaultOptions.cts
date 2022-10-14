@@ -1,6 +1,6 @@
 import { IPassword } from "../interfaces/password.cjs"
 
-export const passwordDefaults = (options: IPassword) => {
+export const PasswordDefaults = (options: IPassword) => {
 	return {
 		options: {
 			minLength: options.minLength || 5,
@@ -12,23 +12,23 @@ export const passwordDefaults = (options: IPassword) => {
 		messages: {
 			minLength: {
 				criteria: `Has a minimum of ${options.minLength} characters`,
-				valid: false,
+				passes: false,
 			},
 			requireNumber: {
 				criteria: `Has a number`,
-				valid: false,
+				passes: false,
 			},
 			requireSpecialCharacter: {
 				criteria: `Has a special character`,
-				valid: false,
+				passes: false,
 			},
 			requireUpperCase: {
 				criteria: `Has an uppercase letter`,
-				valid: false,
+				passes: false,
 			},
 			requireLowerCase: {
 				criteria: `Has a lowercase letter`,
-				valid: false,
+				passes: false,
 			}
 		}
 	}

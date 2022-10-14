@@ -1,4 +1,4 @@
-export type IPassword = {
+export interface IPassword {
 	minLength: number;
 	requireNumber: boolean;
 	requireSpecialCharacter: boolean;
