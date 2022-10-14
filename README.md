@@ -1,6 +1,17 @@
-# RegexBuddy :sob:
+# RegexBuddy
 
 regexbuddy allows you to implement common regex functionality in your code, using a simplified syntax. Currently, regexbuddy has functions for regex-based password validation, as well as array duplicate functions. The array functions - along with other features - are being added, and a new version is released weekly.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Implementation](#implement-into-your-project)
+- [Functions and Methods](#functions-and-methods)
+  - [Email Validation](#email-validation)
+    - [Email Validation Options](#email-validation-options)
+  - [Password Validation](#password-validation)
+  - [Case Conversion](#case-conversion)
+  - [Array De-Duplication](#array-de-duplication)
 
 ## Features
 
@@ -38,7 +49,7 @@ regexBuddy.password(input).validate();
 
 **COMMENT:** While having generic-sounding function names is a (rightfully) contested topic, doing so makes the syntax feel more natural. And implementing it like the example above makes it easier to find where regexbuddy is used in your code, because the functions are prefixed with `regexBuddy`.
 
-## Available Functions and Methods
+## Functions and Methods
 
 ### Email Validation
 
@@ -188,3 +199,5 @@ regexBuddy.convertCase("your String goes Here", { case: 'camel' })
 The return value of this is simply the string converted into the desired case.
 
 **NOTE:** This is a much more performant way to utilize the case converter, and is recommended, when you can.
+
+### Array De-Duplication
