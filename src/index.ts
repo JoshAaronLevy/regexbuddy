@@ -1,4 +1,4 @@
-import { IPassword } from "./interfaces/password.cjs";
+import { IPassword, IPasswordValidation } from "./interfaces/password.cjs";
 import { PasswordDefaults } from "./lib/defaultOptions.cjs";
 import { passwordExpressions } from "./lib/expressions.cjs";
 
@@ -15,19 +15,22 @@ const validatePassword = (password: string, options: IPassword) => {
 	if (options.requireSpecialCharacter && passwordExpressions.hasSpecialCharacter.test(password)) pwMsgs.requireSpecialCharacter.passes = true;
 	if (options.requireUpperCase && passwordExpressions.hasUpperCase.test(password)) pwMsgs.requireUpperCase.passes = true;
 	if (options.requireLowerCase && passwordExpressions.hasLowerCase.test(password)) pwMsgs.requireLowerCase.passes = true;
-	const passingCriteria = Object.values(pwMsgs).filter((msg) => msg.passes === true).map((msg) => msg.criteria);
-	const failingCriteria = Object.values(pwMsgs).filter((msg) => msg.passes === false).map((msg) => msg.criteria);
-	return {
-		isValid: (Object.keys(pwMsgs).filter(key => pwMsgs[key].passes === false).length > 0) ? false : true,
-		requirements: Object.values(pwMsgs).map((option) => {
-			return {
-				criteria: option.criteria,
-				passes: option.passes
-			}
-		}),
-		passing: passingCriteria,
-		failing: failingCriteria
-	}
+	const pwValid = (Object.keys(pwMsgs).filter(key => pwMsgs[key].passes === false).length === 0);
+	const passingVals = Object.values(pwMsgs).filter((msg) => msg.passes === true).map((msg) => msg.criteria);
+	const failingVals = Object.values(pwMsgs).filter((msg) => msg.passes === false).map((msg) => msg.criteria);
+	const pwReqs = Object.values(pwMsgs).map((option) => {
+		return {
+			criteria: option.criteria,
+			passes: option.passes
+		}
+	});
+	const validationObject: IPasswordValidation = {
+		isValid: pwValid,
+		requirements: pwReqs,
+		passing: passingVals,
+		failing: failingVals
+	};
+	return validationObject;
 }
 
 const matchPassword = (password1: string, password2: string) => new RegExp(`^${password1}$`).test(password2);

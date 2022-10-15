@@ -1,17 +1,18 @@
 import { IPassword } from "../interfaces/password.cjs"
 
-export const PasswordDefaults = (options: IPassword) => {
+export const PasswordDefaults = (...options: any) => {
+	const selectedOptions: IPassword = options[0];
 	return {
 		options: {
-			minLength: options.minLength || 5,
-			requireNumber: options.requireNumber || true,
-			requireSpecialCharacter: options.requireSpecialCharacter || true,
-			requireUpperCase: options.requireUpperCase || true,
-			requireLowerCase: options.requireLowerCase || true
+			minLength: selectedOptions.minLength || 5,
+			requireNumber: selectedOptions.requireNumber || true,
+			requireSpecialCharacter: selectedOptions.requireSpecialCharacter || true,
+			requireUpperCase: selectedOptions.requireUpperCase || true,
+			requireLowerCase: selectedOptions.requireLowerCase || true
 		},
 		messages: {
 			minLength: {
-				criteria: `Has a minimum of ${options.minLength} characters`,
+				criteria: `Has a minimum of ${selectedOptions.minLength} characters`,
 				passes: false,
 			},
 			requireNumber: {
@@ -30,6 +31,12 @@ export const PasswordDefaults = (options: IPassword) => {
 				criteria: `Has a lowercase letter`,
 				passes: false,
 			}
+		},
+		returnValue: {
+			isValid: false,
+			requirements: [],
+			passing: [],
+			failing: []
 		}
 	}
 }
