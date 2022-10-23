@@ -1,5 +1,5 @@
 import * as expressions from "../lib/expressions.mjs";
-import * as defaultOptions from "../lib/defaultOptions.mjs";
+import { emailOptions, passwordOptions, caseOptions, arrayOptions } from "../lib/defaultOptions.mjs";
 
 const renderError = (errorMsg) => {
 	console.error(`RegexBuddy: ` + errorMsg);
@@ -34,6 +34,10 @@ const validateEmail = (emailAddress, options) => {
 const validatePassword = (password, options) => {
 	if (!password || password === undefined) return renderError(`No password provided`);
 	if (password.length >= options.minLength.value) options.minLength.valid = true;
+	if (options.requireNumber.value === false) options.requireNumber.valid = true;
+	if (options.requireSpecialCharacter.value === false) options.requireSpecialCharacter.valid = true;
+	if (options.requireUpperCase.value === false) options.requireUpperCase.valid = true;
+	if (options.requireLowerCase.value === false) options.requireLowerCase.valid = true;
 	if (options.requireNumber.value && expressions.password.hasNumber.test(password)) options.requireNumber.valid = true;
 	if (options.requireSpecialCharacter.value && expressions.password.hasSpecialCharacter.test(password)) options.requireSpecialCharacter.valid = true;
 	if (options.requireUpperCase.value && expressions.password.hasUpperCase.test(password)) options.requireUpperCase.valid = true;
@@ -106,7 +110,7 @@ export const email = (emailAddress) => {
 				if (options.permitted && options.permitted.constructor.name === 'String') options.permitted = [options.permitted];
 				if (options.restricted && options.restricted.constructor.name === 'String') options.restricted = [options.restricted];
 			}
-			const customOptions = defaultOptions.defaults(options).email;
+			const customOptions = emailOptions(options);
 			return validateEmail(emailAddress, customOptions);
 		}
 	};
@@ -116,7 +120,7 @@ export const password = (password) => {
 	return {
 		validate: (options) => {
 			if (!options || options === undefined) options = {};
-			const customOptions = defaultOptions.defaults(options).password;
+			const customOptions = passwordOptions(options);
 			return validatePassword(password, customOptions);
 		},
 		matches: (password2) => {
@@ -165,7 +169,7 @@ export const array = (leftArray) => {
 					}
 				})
 			}
-			const customOptions = defaultOptions.defaults(options).array;
+			const customOptions = arrayOptions(options);
 			return findArrayDupes(leftArray, comparisonVal, customOptions);
 		}
 	}
