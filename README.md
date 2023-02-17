@@ -1,14 +1,13 @@
 <div align="center">
+  <h2>regexbuddy</h2>
   <p>Implement common regex functionality in your code with a simplified syntax</p>
-  <a href="https://github.com/joshaaronlevy/regexbuddy/actions"><img src="https://github.com/joshaaronlevy/regexbuddy/workflows/CI/badge.svg?branch=main" alt="Build status"></a>
-  <a href="https://coveralls.io/github/joshaaronlevy/regexbuddy"><img src="https://img.shields.io/coveralls/github/joshaaronlevy/regexbuddy" alt="Coverage status"></a>
-  <a href="https://packagephobia.now.sh/result?p=regexbuddy"><img src="https://badgen.net/packagephobia/install/regexbuddy" alt="Current version"></a>
-  <a href="https://www.npmjs.com/package/regexbuddy"><img src="https://img.shields.io/npm/v/regexbuddy" alt="Install size"></a>
+  <a href="https://github.com/joshaaronlevy/regexbuddy/actions"><img src="https://github.com/joshaaronlevy/regexbuddy/workflows/CI/badge.svg?branch=main" alt="Build Status"></a>
+  <a href="https://coveralls.io/github/joshaaronlevy/regexbuddy"><img src="https://img.shields.io/coveralls/github/joshaaronlevy/regexbuddy" alt="Coverage Status"></a>
+  <a href="https://packagephobia.now.sh/result?p=regexbuddy"><img src="https://badgen.net/packagephobia/install/regexbuddy" alt="Current Version"></a>
+  <a href="https://www.npmjs.com/package/regexbuddy"><img src="https://img.shields.io/npm/v/regexbuddy" alt="Install Size"></a>
 </div>
 
 ---
-
-# RegexBuddy
 
 regexbuddy allows you to implement common regex functionality in your code, using a simplified syntax. Currently, regexbuddy has functions for regex-based password validation, as well as array duplicate functions. The array functions - along with other features - are being added, and a new version is released weekly.
 
