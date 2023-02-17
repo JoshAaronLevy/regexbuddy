@@ -2,26 +2,38 @@ import * as expressions from "../lib/expressions.mjs";
 import { emailOptions, passwordOptions, caseOptions, arrayOptions } from "../lib/defaultOptions.mjs";
 
 const renderError = (errorMsg) => {
-	console.error(`RegexBuddy: ` + errorMsg);
-	return false;
+	return {
+		valid: false,
+		message: `RegexBuddy: ${errorMsg}`
+	}
 }
 
 const validateEmail = (emailAddress, options) => {
 	let emailValid = false;
 	let message = null;
 	if (!emailAddress || emailAddress === undefined) message = `No email address provided`;
-	if (emailAddress.constructor.name !== 'String') message = `Invalid input type for email. Expected a string, but got ${emailAddress.constructor.name}`;
+	if (emailAddress?.constructor.name !== 'String') message = `Invalid input type for email. Expected a string, but got ${emailAddress?.constructor.name}`;
 	if (!expressions.email(options).base.test(emailAddress)) message = `Invalid email address: ${emailAddress}`;
-	if (!options.permitted.value && !options.restricted.value) {
+	if (!options.permitted && !options.restricted) {
 		emailValid = expressions.email(options).base.test(emailAddress);
 	} else {
 		if (expressions.email(options).base.test(emailAddress)) {
-			if (options.permitted.value) {
-				const emailCheck = options.permitted.value.map((value) => expressions.email(value).permitted.test(emailAddress)).filter((value) => value === true);
-				emailCheck.length > 0 ? emailValid = true : message = `${options.permitted.errorMessage}`;
-			} else if (options.restricted.value) {
-				const emailCheck = options.restricted.value.map((value) => expressions.email(value).restricted.test(emailAddress)).filter((value) => value === true);
-				emailCheck.length === 0 ? emailValid = true : message = `${options.restricted.errorMessage}`;
+			let permittedEmails = options.permitted?.join(', ') || null;
+			let restrictedEmails = options.restricted?.join(', ') || null;
+			if (options.restricted) {
+				const emailCheck = options.restricted.map((value) => expressions.email(value).restricted.test(emailAddress)).filter((value) => value === true);
+				if (emailCheck.length === 0) {
+					emailValid = true;
+				} else {
+					if (options.permitted) {
+						message = `${restrictedEmails} email addresses cannot be used. Only ${permittedEmails} email addresses are permitted.`;
+					} else {
+						message = `${restrictedEmails} email addresses cannot be used.`;
+					}
+				}
+			} else if (options.permitted) {
+				const emailCheck = options.permitted.map((value) => expressions.email(value).permitted.test(emailAddress)).filter((value) => value === true);
+				emailCheck.length > 0 ? emailValid = true : message = `Only ${permittedEmails} email addresses are permitted.`;
 			}
 		}
 	}

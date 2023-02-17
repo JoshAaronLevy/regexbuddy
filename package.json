@@ -8,7 +8,7 @@
   "main": "./bin/index.mjs",
   "scripts": {
     "deploy": "git add -A && git commit -m \"updated version\" && git push origin main && npm publish",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [
     "regex",
@@ -27,5 +27,8 @@
   "preferGlobal": false,
   "bin": {
     "regexbuddy": "./bin/index.mjs"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
   }
 }
