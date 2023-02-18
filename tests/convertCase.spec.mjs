@@ -5,7 +5,7 @@ describe('convertCase', () => {
 		const result = convertCase(null, { case: 'camel' });
 		expect(result).toEqual({
 			valid: false,
-			message: 'RegexBuddy: No value provided to convert'
+			message: 'regexbuddy: No value provided to convert'
 		});
 	});
 
@@ -15,7 +15,7 @@ describe('convertCase', () => {
 		const result = convertCase('hello world', { case: inputCase });
 		expect(result).toEqual({
 			valid: false,
-			message: `RegexBuddy: ${inputCase.toLowerCase()} is not a valid case. Please use one of the following: ${validCases.join(', ')}`
+			message: `regexbuddy: ${inputCase.toLowerCase()} is not a valid case. Please use one of the following: ${validCases.join(', ')}`
 		});
 	});
 

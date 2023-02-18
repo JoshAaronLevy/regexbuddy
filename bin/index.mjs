@@ -4,7 +4,7 @@ import { emailOptions, passwordOptions, caseOptions, arrayOptions } from "../lib
 const renderError = (errorMsg) => {
 	return {
 		valid: false,
-		message: `RegexBuddy: ${errorMsg}`
+		message: `regexbuddy: ${errorMsg}`
 	}
 }
 
@@ -44,21 +44,17 @@ const validateEmail = (emailAddress, options) => {
 }
 
 const validatePassword = (password, options) => {
+	let invalidCriteria = [];
 	if (!password || password === undefined) return renderError(`No password provided`);
-	if (password.length >= options.minLength.value) options.minLength.valid = true;
-	if (options.requireNumber.value === false) options.requireNumber.valid = true;
-	if (options.requireSpecialCharacter.value === false) options.requireSpecialCharacter.valid = true;
-	if (options.requireUpperCase.value === false) options.requireUpperCase.valid = true;
-	if (options.requireLowerCase.value === false) options.requireLowerCase.valid = true;
-	if (options.requireNumber.value && expressions.password.hasNumber.test(password)) options.requireNumber.valid = true;
-	if (options.requireSpecialCharacter.value && expressions.password.hasSpecialCharacter.test(password)) options.requireSpecialCharacter.valid = true;
-	if (options.requireUpperCase.value && expressions.password.hasUpperCase.test(password)) options.requireUpperCase.valid = true;
-	if (options.requireLowerCase.value && expressions.password.hasLowerCase.test(password)) options.requireLowerCase.valid = true;
-	const filteredErrors = Object.values(options).filter((option) => option.valid === false).map((option) => option.errorMessage);
-	if (filteredErrors && filteredErrors.length > 0) {
+	if (password.length < options.minLength) invalidCriteria.push(`Has a minimum of ${options.minLength} characters`);
+	if (options.requireNumber && !expressions.password.hasNumber.test(password)) invalidCriteria.push(`Contains at least one number`);
+	if (options.requireSpecialCharacter && !expressions.password.hasSpecialCharacter.test(password)) invalidCriteria.push(`Contains at least one special character`);
+	if (options.requireUpperCase && !expressions.password.hasUpperCase.test(password)) invalidCriteria.push(`Contains at least one uppercase letter`);
+	if (options.requireLowerCase && !expressions.password.hasLowerCase.test(password)) invalidCriteria.push(`Contains at least one lowercase letter`);
+	if (invalidCriteria.length > 0) {
 		return {
 			valid: false,
-			errors: filteredErrors
+			errors: invalidCriteria
 		}
 	} else {
 		return {
