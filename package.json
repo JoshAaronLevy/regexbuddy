@@ -1,6 +1,6 @@
 {
   "name": "regexbuddy",
-  "version": "0.14.11",
+  "version": "0.15.1",
   "description": "Implement regex functions with ease in JavaScript",
   "repository": {
     "url": "https://github.com/JoshAaronLevy/regexbuddy"
