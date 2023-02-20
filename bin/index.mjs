@@ -1,5 +1,5 @@
 import * as expressions from "../lib/expressions.mjs";
-import { emailOptions, passwordOptions, caseOptions, arrayOptions } from "../lib/defaultOptions.mjs";
+import { emailOptions, passwordOptions, arrayOptions } from "../lib/defaultOptions.mjs";
 
 const renderError = (errorMsg) => {
 	return {
