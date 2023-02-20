@@ -68,32 +68,36 @@ const matchPassword = (password1, password2) => new RegExp(`^${password1}$`).tes
 
 const findArrayDupes = (leftArray, comparisonVal, options) => {
 	let result = {};
-	let duplicateVals;
-	let uniqueVals;
 	const scrubbedSet = new Set(leftArray.filter((item, index) => leftArray.indexOf(item) === index));
 	if (comparisonVal && comparisonVal !== '') {
-		duplicateVals = leftArray.filter((item) => expressions.array(options, comparisonVal).test(item));
-		uniqueVals = leftArray.filter((item) => !expressions.array(options, comparisonVal).test(item));
+		const duplicateVals = leftArray.filter((item) => expressions.array(options, comparisonVal).test(item));
+		let uniqueVals;
+		if (duplicateVals.length > 0) {
+			uniqueVals = duplicateVals.map((item) => leftArray.filter((val) => val !== item))[0];
+		} else {
+			uniqueVals = leftArray;
+		}
 		result = {
-			options: options,
 			duplicateList: duplicateVals,
 			uniqueList: uniqueVals,
 			scrubbedList: [...scrubbedSet],
-			duplicateCount: duplicateVals.length || 0,
-			uniqueCount: uniqueVals.length || 0
+			duplicateCount: duplicateVals?.length || 0,
+			uniqueCount: uniqueVals?.length || 0
 		}
 	} else {
-		duplicateVals = new Set(leftArray.filter((item, index) => leftArray.indexOf(item) !== index));
-		let dupeCount = duplicateVals.size;
-		uniqueVals = new Set(leftArray.filter((item, index) => leftArray.indexOf(item) === index));
-		let uniqueCount = uniqueVals.size;
+		const duplicateVals = leftArray.filter((item, index) => leftArray.indexOf(item) !== index);
+		let uniqueVals;
+		if (duplicateVals.length > 0) {
+			uniqueVals = duplicateVals.map((item) => leftArray.filter((val) => val !== item))[0];
+		} else {
+			uniqueVals = leftArray;
+		}
 		result = {
-			options: options,
-			duplicateList: [...duplicateVals],
-			uniqueList: [...uniqueVals],
+			duplicateList: duplicateVals,
+			uniqueList: uniqueVals,
 			scrubbedList: [...scrubbedSet],
-			duplicateCount: dupeCount,
-			uniqueCount: uniqueCount
+			duplicateCount: duplicateVals?.length || 0,
+			uniqueCount: uniqueVals?.length || 0
 		}
 	}
 	return result;

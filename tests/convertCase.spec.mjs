@@ -12,7 +12,8 @@ describe('convertCase', () => {
 	it('should return an error with an invalid case specified', () => {
 		const inputCase = 'Mickey Mouse';
 		const validCases = ['camel', 'snake', 'kebab', 'pascal', 'sql'];
-		const result = convertCase('hello world', { case: inputCase });
+		const caseOptions = { case: inputCase };
+		const result = convertCase('hello world', caseOptions);
 		expect(result).toEqual({
 			valid: false,
 			message: `regexbuddy: ${inputCase.toLowerCase()} is not a valid case. Please use one of the following: ${validCases.join(', ')}`
