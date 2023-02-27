@@ -1,4 +1,4 @@
-import { convertCase } from '../bin/index.mjs';
+import { convertCase } from '../public/bin/index';
 
 describe('convertCase', () => {
 	it('should return an error with no value provided to convert', () => {

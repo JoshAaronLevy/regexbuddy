@@ -5,11 +5,12 @@
   "repository": {
     "url": "https://github.com/JoshAaronLevy/regexbuddy"
   },
-  "main": "./bin/index.mjs",
+  "main": "./public/bin/index.js",
   "scripts": {
-    "start": "node ./bin/index.mjs",
+    "start": "node ./public/bin/index.js",
+    "build": "rm -rf public && tsc",
     "deploy": "git add -A && git commit -m \"updated version\" && git push origin main && npm publish",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "rm -rf public && tsc && node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [
     "regex",
@@ -27,9 +28,18 @@
   "private": false,
   "preferGlobal": false,
   "bin": {
-    "regexbuddy": "./bin/index.mjs"
+    "regexbuddy": "./public/bin/index.js"
   },
   "devDependencies": {
-    "jest": "^29.3.1"
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.14.2",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.35.0",
+    "jest": "^29.4.3",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.5"
   }
 }
