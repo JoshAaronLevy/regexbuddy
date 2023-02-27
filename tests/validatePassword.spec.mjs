@@ -1,4 +1,4 @@
-import { password } from '../bin/index.mjs';
+import { password } from '../dist/bin/index';
 
 describe('password', () => {
     describe('validate', () => {

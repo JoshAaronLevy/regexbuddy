@@ -1,4 +1,4 @@
-import { array } from '../bin/index.mjs';
+import { array } from '../dist/bin/index';
 
 describe('findArrayDupes', () => {
     test('should return error message when no array is provided', () => {

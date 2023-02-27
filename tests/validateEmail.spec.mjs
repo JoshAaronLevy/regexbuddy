@@ -1,4 +1,4 @@
-import { email } from '../bin/index.mjs';
+import { email } from '../dist/bin/index';
 
 describe('validateEmail function', () => {
     const errorMessageCheck = (options) => {
