@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+// eslint-disable-next-line @typescript-eslint/prefer-namespace-keyword
 declare module IPassword {
     export interface Options {
         minLength?: number;

@@ -26,7 +26,7 @@ const emailOptions = (options) => {
 exports.emailOptions = emailOptions;
 const emailExpressions = (value) => {
     return {
-        base: new RegExp(/^[^@ ]+@[^@ ]+\.[^@ \.]{2,}$/),
+        base: new RegExp(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/),
         permitted: new RegExp(value, 'i'),
         restricted: new RegExp(value, 'i'),
     };
@@ -40,7 +40,9 @@ exports.caseExpressions = {
     snake: new RegExp(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g),
     kebab: new RegExp(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g),
 };
-const arrayExpressions = (options, comparisonVal) => {
+const arrayExpressions = (options, comparisonVal
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+) => {
     if (options.ignoreCase && options.matchWholeWord)
         return new RegExp(`\\b${comparisonVal}\\b`, 'i');
     if (options.ignoreCase && !options.matchWholeWord)

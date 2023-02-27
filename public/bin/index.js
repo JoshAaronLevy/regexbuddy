@@ -9,22 +9,22 @@ const renderError = (errorMsg) => {
     };
 };
 const validatePassword = (password, options) => {
-    let invalidCriteria = [];
+    const invalidCriteria = [];
     if (!password || password === undefined)
         return renderError('No password provided');
     if (password.length < options.minLength)
         invalidCriteria.push(`Has a minimum of ${options.minLength} characters`);
     if (options.requireNumber && !constants_1.passwordExpressions.hasNumber.test(password))
-        invalidCriteria.push(`Contains at least one number`);
+        invalidCriteria.push('Contains at least one number');
     if (options.requireSpecialCharacter &&
         !constants_1.passwordExpressions.hasSpecialCharacter.test(password))
-        invalidCriteria.push(`Contains at least one special character`);
+        invalidCriteria.push('Contains at least one special character');
     if (options.requireUpperCase &&
         !constants_1.passwordExpressions.hasUpperCase.test(password))
-        invalidCriteria.push(`Contains at least one uppercase letter`);
+        invalidCriteria.push('Contains at least one uppercase letter');
     if (options.requireLowerCase &&
         !constants_1.passwordExpressions.hasLowerCase.test(password))
-        invalidCriteria.push(`Contains at least one lowercase letter`);
+        invalidCriteria.push('Contains at least one lowercase letter');
     if (invalidCriteria.length > 0) {
         return {
             valid: false,
@@ -43,7 +43,7 @@ const validateEmail = (emailAddress, options) => {
     let emailValid = false;
     let message = '';
     if (!emailAddress || emailAddress === undefined) {
-        message = `No email address provided`;
+        message = 'No email address provided';
     }
     if (typeof emailAddress !== 'string') {
         message = `Invalid input type for email. Expected a string, but got ${typeof emailAddress}`;
@@ -56,8 +56,8 @@ const validateEmail = (emailAddress, options) => {
     }
     else {
         if ((0, constants_1.emailExpressions)('').base.test(emailAddress)) {
-            let permittedEmails = options.permitted?.join(', ') || null;
-            let restrictedEmails = options.restricted?.join(', ') || null;
+            const permittedEmails = options.permitted?.join(', ') || null;
+            const restrictedEmails = options.restricted?.join(', ') || null;
             if (options.restricted) {
                 const emailCheck = options.restricted
                     .map((value) => (0, constants_1.emailExpressions)(value).restricted.test(emailAddress))
@@ -170,7 +170,7 @@ const email = (emailAddress) => {
 exports.email = email;
 const convertCase = (...args) => {
     if (!args[0] || args[0] === undefined)
-        return renderError(`No value provided to convert`);
+        return renderError('No value provided to convert');
     if (args.length === 1) {
         return {
             original: args[0],
@@ -201,7 +201,7 @@ const convertCase = (...args) => {
 exports.convertCase = convertCase;
 const array = (leftArray) => {
     if (!leftArray)
-        return renderError(`No array provided`);
+        return renderError('No array provided');
     if (leftArray.constructor.name !== 'Array')
         return renderError(`Invalid input type for ${leftArray}. Expected an array, but got ${leftArray.constructor.name}`);
     return {

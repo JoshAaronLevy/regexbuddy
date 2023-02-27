@@ -1,8 +1,10 @@
-import IPassword from "../interfaces/password.interface";
-import IEmail from "../interfaces/email.interface";
-import ICase from "../interfaces/case.interface";
-import IArray from "../interfaces/array.interface";
-import { passwordOptions, passwordExpressions, emailOptions, emailExpressions, caseExpressions, arrayOptions, arrayExpressions } from "../lib/constants";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import IPassword from '../interfaces/password.interface';
+import IEmail from '../interfaces/email.interface';
+import ICase from '../interfaces/case.interface';
+import IArray from '../interfaces/array.interface';
+import { passwordOptions, passwordExpressions, emailOptions, emailExpressions, caseExpressions, arrayOptions, arrayExpressions } from '../lib/constants';
 
 interface IRenderError {
 	valid: boolean;
@@ -20,7 +22,7 @@ const validatePassword = (
 	password: string,
 	options: IPassword.Options
 ): IPassword.ValidationResult | IRenderError => {
-	let invalidCriteria: string[] = [];
+	const invalidCriteria: string[] = [];
 	if (!password || password === undefined)
 		return renderError('No password provided');
 	if (password.length < options.minLength!)
@@ -28,22 +30,22 @@ const validatePassword = (
 			`Has a minimum of ${options.minLength} characters`
 		);
 	if (options.requireNumber! && !passwordExpressions.hasNumber.test(password))
-		invalidCriteria.push(`Contains at least one number`);
+		invalidCriteria.push('Contains at least one number');
 	if (
 		options.requireSpecialCharacter! &&
 		!passwordExpressions.hasSpecialCharacter.test(password)
 	)
-		invalidCriteria.push(`Contains at least one special character`);
+		invalidCriteria.push('Contains at least one special character');
 	if (
 		options.requireUpperCase! &&
 		!passwordExpressions.hasUpperCase.test(password)
 	)
-		invalidCriteria.push(`Contains at least one uppercase letter`);
+		invalidCriteria.push('Contains at least one uppercase letter');
 	if (
 		options.requireLowerCase! &&
 		!passwordExpressions.hasLowerCase.test(password)
 	)
-		invalidCriteria.push(`Contains at least one lowercase letter`);
+		invalidCriteria.push('Contains at least one lowercase letter');
 	if (invalidCriteria.length > 0) {
 		return {
 			valid: false,
@@ -68,7 +70,7 @@ const validateEmail = (
 	let message = '';
 
 	if (!emailAddress || emailAddress === undefined) {
-		message = `No email address provided`;
+		message = 'No email address provided';
 	}
 
 	if (typeof emailAddress !== 'string') {
@@ -83,8 +85,8 @@ const validateEmail = (
 		emailValid = emailExpressions('').base.test(emailAddress);
 	} else {
 		if (emailExpressions('').base.test(emailAddress)) {
-			let permittedEmails = options.permitted?.join(', ') || null;
-			let restrictedEmails = options.restricted?.join(', ') || null;
+			const permittedEmails = options.permitted?.join(', ') || null;
+			const restrictedEmails = options.restricted?.join(', ') || null;
 			if (options.restricted) {
 				const emailCheck = options.restricted
 					.map((value) =>
@@ -130,7 +132,7 @@ const findArrayDupes = (
 	);
 	if (comparisonVal && comparisonVal !== '') {
 		const duplicateVals = leftArray.filter((item) =>
-		arrayExpressions(options, comparisonVal).test(item)
+			arrayExpressions(options, comparisonVal).test(item)
 		);
 		let uniqueVals: Array<[]>;
 		if (duplicateVals.length > 0) {
@@ -227,7 +229,7 @@ export const convertCase = (
 	...args: Array<string>
 ): ICase.Conversions | string | IRenderError | null | any => {
 	if (!args[0] || args[0] === undefined)
-		return renderError(`No value provided to convert`);
+		return renderError('No value provided to convert');
 	if (args.length === 1) {
 		return {
 			original: args[0],
@@ -255,7 +257,7 @@ export const convertCase = (
 };
 
 export const array = (leftArray: any[]) => {
-	if (!leftArray) return renderError(`No array provided`);
+	if (!leftArray) return renderError('No array provided');
 	if (leftArray.constructor.name !== 'Array')
 		return renderError(
 			`Invalid input type for ${leftArray}. Expected an array, but got ${leftArray.constructor.name}`

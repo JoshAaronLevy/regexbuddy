@@ -33,7 +33,7 @@ export const emailOptions = (
 
 export const emailExpressions = (value: string): IEmail.Expressions => {
 	return {
-		base: new RegExp(/^[^@ ]+@[^@ ]+\.[^@ \.]{2,}$/),
+		base: new RegExp(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/),
 		permitted: new RegExp(value, 'i'),
 		restricted: new RegExp(value, 'i'),
 	};
@@ -55,6 +55,7 @@ export const caseExpressions: ICase.Expressions = {
 export const arrayExpressions = (
 	options: IArray.Options,
 	comparisonVal: string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
 	if (options.ignoreCase && options.matchWholeWord)
 		return new RegExp(`\\b${comparisonVal}\\b`, 'i');
