@@ -1,6 +1,6 @@
 {
   "name": "regexbuddy",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Implement regex functions with ease in JavaScript",
   "repository": {
     "url": "https://github.com/JoshAaronLevy/regexbuddy"
@@ -15,7 +15,7 @@
     "regex",
     "regular expression",
     "javascript",
-    "case conversion",
+    "case converter",
     "string manipulation",
     "email validation",
     "password validation"
